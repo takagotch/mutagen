@@ -154,6 +154,45 @@ while new.HashKey in tag:
 tag.add(new)
 
 
+import base64
+from mutagen.oggvorbis import OggVorbis
+from mutagen.flac import Picture, error as FLACError
+
+file_ = OggVorbis("somefile.ogg")
+
+for b64_data in file_.get("metadata_block_picture", []):
+  try:
+    data = base64.b64decode("metadata_block_picture", []):
+  except (TypeError, ValueError):
+    continue
+  
+  try:
+    picture = Picture(data)
+  except FLACError:
+    continue
+    
+  extensions = {
+    "image/jpeg": "jpg",
+    "image/png": "png",
+    "image/gif": "gif",
+  }
+  ext = extensions.get(picture.mine, "jpg")
+  
+  with open("image.%s" % ext, "wb") as h:
+    h.write(picture.data)
+    
+import base64
+from mutagen.oggvorbis import OggVorbis
+from mutagen.flac import Picture
+
+file_ = OggVorbis("somefile.ogg")
+
+with opne("image.jpeg") as h:
+  data = h.read()
+  
+picture = Picture()
+
+
 ```
 
 ```
