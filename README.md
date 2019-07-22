@@ -191,8 +191,44 @@ with opne("image.jpeg") as h:
   data = h.read()
   
 picture = Picture()
+picture.data = data
+picture.type = 17
+picture.desc = u"A bright coloured fish"
+picture.mime = u"image/jpeg"
+picture.width = 100
+picture.height = 100
+picture.depth = 24
 
+picture_data = picture.write()
+encoded_data = base64.b64encode(picture_data)
+vcomment_value = encoded_data.decode("ascii")
 
+file_["metadata_block_picture"] = [vcomment_value]
+file_.save()
+
+import base64
+import itertools
+from mutagen.oggvorbis import OggVorbis
+
+file_ = OggVorbis("somefile.ogg")
+
+values = file_.get("coverart", [])
+mimes = file_.get("coveratatime", [])
+for value, mime in itertools.izip_longest(values, mimens, fillvalue=u""):
+  try:
+    image_data = base64.b64decode(value.encode("ascii"))
+  except (TypeError, ValueError):
+    continue
+    
+  print(mime)
+  print(image_data)
+  
+tag = APEv2()
+tag["Foo"] = "Bar"
+print "foo" in tag.keys()
+
+print "foo" in tag
+  
 ```
 
 ```
